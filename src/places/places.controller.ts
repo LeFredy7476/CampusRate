@@ -8,27 +8,27 @@ export class PlacesController {
   constructor(private readonly placesService: PlacesService) {}
 
   @Post()
-  create(@Body() createPlaceDto: CreatePlaceDto) {
+  async create(@Body() createPlaceDto: CreatePlaceDto) {
     return this.placesService.create(createPlaceDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.placesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.placesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return this.placesService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlaceDto: UpdatePlaceDto) {
-    return this.placesService.update(+id, updatePlaceDto);
+  async update(@Param('id') id: string, @Body() updatePlaceDto: UpdatePlaceDto) {
+    return this.placesService.update(id, updatePlaceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.placesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return this.placesService.remove(id);
   }
 }

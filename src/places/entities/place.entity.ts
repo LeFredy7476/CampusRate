@@ -8,26 +8,26 @@ export type PlaceDocument = HydratedDocument<Place>;
 export class Place {
     @Prop({ type: String, default: () => 'rev_' + randomUUID(), unique: true }) 
     id!: string;
-    @Prop({ required: true }) 
+    @Prop({ required: true, unique: true }) 
     name!: string;
     @Prop({ required: true }) 
     description!: string;
-    @Prop({ required: true }) 
+    @Prop({ required: true, index: true }) 
     category!: string;
     @Prop({ required: true }) 
     address!: string;
-    @Prop({ required: true }) 
-    services!: string[];
-    @Prop({ required: true }) 
-    status!: string;
-    @Prop({ required: true }) 
-    averageRating?: number;
-    @Prop({ required: true }) 
-    reviewCount!: number;
+    @Prop({ type: [String], default: () => [] })
+    services: string[];
+    @Prop({ default: () => 'ACTIVE' })
+    status: string = 'ACTIVE';
+    @Prop({ type: Number, default: () => null })
+    averageRating: number;
+    @Prop({ default: () => 0 })
+    reviewCount: number;
     @Prop({ default: () => new Date() })
-    createdAt!: Date;
+    createdAt: Date;
     @Prop({ default: () => new Date() })
-    updatedAt!: Date;
+    updatedAt: Date;
 }
 
 export const PlaceSchema = SchemaFactory.createForClass(Place);

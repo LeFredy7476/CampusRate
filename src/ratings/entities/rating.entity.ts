@@ -6,7 +6,7 @@ export type RatingDocument = HydratedDocument<Rating>;
 
 @Schema({ timestamps: true })
 export class Rating {
-    @Prop({ type: String, default: () => 'rev_' + randomUUID(), unique: true }) 
+    @Prop({ type: String, default: () => 'rat_' + randomUUID(), unique: true }) 
     id!: string;
     @Prop({ required: true }) 
     placeId!: string;

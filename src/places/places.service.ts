@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePlaceDto } from './dto/create-place.dto.js';
 import { UpdatePlaceDto } from './dto/update-place.dto.js';
+import { Place, PlaceDocument, PlaceSchema } from './entities/place.entity.js';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class PlacesService {
-  create(createPlaceDto: CreatePlaceDto) {
-    return 'This action adds a new place';
+  constructor(
+    @InjectModel(Place.name) private placeModel: Model<PlaceDocument>
+  ) {}
+
+  async create(createPlaceDto: CreatePlaceDto) {
+    const newPlace = new this.placeModel(createPlaceDto);
+    return newPlace.save();
   }
 
-  findAll() {
-    return `This action returns all places`;
+  async findAll() {
+    return this.placeModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} place`;
+  async findOne(id: string) {
+    return this.placeModel.findOne({ id: id }).exec();
   }
 
-  update(id: number, updatePlaceDto: UpdatePlaceDto) {
-    return `This action updates a #${id} place`;
+  async update(id: string, updatePlaceDto: UpdatePlaceDto) {
+    return this.placeModel.findOneAndUpdate({ id: id }, updatePlaceDto).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} place`;
+  async remove(id: string) {
+    return this.placeModel.findOneAndDelete({ id: id }).exec();
   }
 }
