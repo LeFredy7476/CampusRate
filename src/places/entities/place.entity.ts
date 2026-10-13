@@ -1,13 +1,37 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+import { randomUUID } from 'crypto';
+
+export type PlaceDocument = HydratedDocument<Place>;
+
+@Schema({ timestamps: true })
 export class Place {
-    id: string;
-    name: string;
-    description: string;
-    category: string;
-    address: string;
-    services: string[];
-    status: string;
+    @Prop({ type: String, default: () => 'rev_' + randomUUID(), unique: true }) 
+    id!: string;
+    @Prop({ required: true }) 
+    name!: string;
+    @Prop({ required: true }) 
+    description!: string;
+    @Prop({ required: true }) 
+    category!: string;
+    @Prop({ required: true }) 
+    address!: string;
+    @Prop({ required: true }) 
+    services!: string[];
+    @Prop({ required: true }) 
+    status!: string;
+    @Prop({ required: true }) 
     averageRating?: number;
-    reviewCount: number;
-    createdAt: Date;
-    updatedAt: Date;
+    @Prop({ required: true }) 
+    reviewCount!: number;
+    @Prop({ default: () => new Date() })
+    createdAt!: Date;
+    @Prop({ default: () => new Date() })
+    updatedAt!: Date;
 }
+
+export const PlaceSchema = SchemaFactory.createForClass(Place);
+
+PlaceSchema.pre('save', function () {
+  this.updatedAt = new Date();
+});
