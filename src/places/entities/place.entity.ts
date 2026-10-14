@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { randomUUID } from 'crypto';
+import { PlaceStatus } from './place-status.enum.js';
+import { PlaceCategory } from './place-category.enum.js';
 
 export type PlaceDocument = HydratedDocument<Place>;
 
@@ -12,14 +14,14 @@ export class Place {
     name!: string;
     @Prop({ required: true }) 
     description!: string;
-    @Prop({ required: true, index: true }) 
-    category!: string;
+    @Prop({ required: true, type: String, enum: PlaceCategory, index: true }) 
+    category!: PlaceCategory;
     @Prop({ required: true }) 
     address!: string;
     @Prop({ type: [String], default: () => [] })
     services: string[];
-    @Prop({ default: () => 'ACTIVE' })
-    status: string = 'ACTIVE';
+    @Prop({ type: String, enum: PlaceStatus, default: () => PlaceStatus.ACTIVE })
+    status: PlaceStatus;
     @Prop({ type: Number, default: () => null })
     averageRating: number;
     @Prop({ default: () => 0 })
