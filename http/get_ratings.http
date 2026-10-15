@@ -1,3 +1,4 @@
+
 ### get ratings
 GET http://localhost:3000/ratings HTTP/1.1
 

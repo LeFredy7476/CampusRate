@@ -1,3 +1,4 @@
+
 ### get places
 GET http://localhost:3000/places?limit=100&page=1 HTTP/1.1
 
