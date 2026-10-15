@@ -1,0 +1,82 @@
+
+### create rating
+POST http://localhost:3000/ratings HTTP/1.1
+Content-Type: application/json
+
+{
+    "placeId": "pla_",
+    "authorName": "Emil",
+    "rating": 3.75,
+    "comment": "bof"
+}
+
+### create rating
+POST http://localhost:3000/ratings HTTP/1.1
+Content-Type: application/json
+
+{
+    "placeId": "pla_",
+    "authorName": "Bob",
+    "rating": 4.25,
+    "comment": "ok place"
+}
+
+### create rating
+POST http://localhost:3000/ratings HTTP/1.1
+Content-Type: application/json
+
+{
+    "placeId": "pla_",
+    "authorName": "Alice",
+    "rating": 5,
+    "comment": "Super"
+}
+
+
+### create rating
+POST http://localhost:3000/ratings HTTP/1.1
+Content-Type: application/json
+
+{
+    "placeId": "pla_",
+    "authorName": "Chloé",
+    "rating": 0,
+    "comment": "Détestable"
+}
+
+### update rating
+PATCH http://localhost:3000/ratings/rat_ HTTP/1.1
+Content-Type: application/json
+
+{
+    "rating": 1
+}
+
+### places get updated
+### get places
+GET http://localhost:3000/places?limit=100&page=1 HTTP/1.1
+
+
+### create rating
+# ! wrong args
+POST http://localhost:3000/ratings HTTP/1.1
+Content-Type: application/json
+
+{
+    "placeIdddd": "pla_",
+    "authorNameeee": "Erroné",
+    "ratingggg": 0,
+    "commentttt": "should raise hella 400"
+}
+
+### create rating
+# ! non-existing place
+POST http://localhost:3000/ratings HTTP/1.1
+Content-Type: application/json
+
+{
+    "placeId": "rev_2cee20c0-33ee-4214-b13d-21edd5ed2542",
+    "authorName": "Mr Inconnu",
+    "rating": 0,
+    "comment": "should raise 404"
+}

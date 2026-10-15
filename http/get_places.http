@@ -1,0 +1,20 @@
+
+### get places
+GET http://localhost:3000/places?limit=100&page=1 HTTP/1.1
+
+### update place
+PATCH http://localhost:3000/places/pla_ HTTP/1.1
+Content-Type: application/json
+
+{
+    "description": "Une Meilleure description"
+}
+
+### limit overflow
+GET http://localhost:3000/places?limit=102 HTTP/1.1
+
+### invalid page
+GET http://localhost:3000/places?page=0 HTTP/1.1
+
+### invalid category
+GET http://localhost:3000/places?category=NAN HTTP/1.1

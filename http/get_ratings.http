@@ -1,0 +1,16 @@
+
+### get ratings
+GET http://localhost:3000/ratings HTTP/1.1
+
+### get one rating
+GET http://localhost:3000/ratings/rat_ HTTP/1.1
+
+### get one rating
+# ! uknown rating
+GET http://localhost:3000/ratings/rat_1nconnue HTTP/1.1
+
+### delete rating
+DELETE http://localhost:3000/ratings/rat_ HTTP/1.1
+
+### delete place (will delete linked ratings)
+DELETE http://localhost:3000/places/pla_ HTTP/1.1
