@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, InternalServerErrorException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, BadRequestException, InternalServerErrorException, Inject, forwardRef, NotFoundException } from '@nestjs/common';
 import { CreateRatingDto } from './dto/create-rating.dto.js';
 import { UpdateRatingDto } from './dto/update-rating.dto.js';
 import { Rating, RatingDocument } from './entities/rating.entity.js';
@@ -33,7 +33,7 @@ export class RatingsService implements IRatingsService {
       await this.placesService.refresh(result.id);
       return returnValue;
     } else {
-      throw new BadRequestException("specified place does not exist");
+      throw new NotFoundException("specified place does not exist");
     }
   }
 
@@ -42,7 +42,12 @@ export class RatingsService implements IRatingsService {
   }
 
   async findOne(id: string) {
-    return await this.ratingModel.findOne({ id: id }).exec();
+    const returnVal = await this.ratingModel.findOne({ id: id }).exec();
+    if (returnVal) {
+      return returnVal;
+    } else {
+      throw new NotFoundException("Place Not Found");
+    }
   }
 
   async findByPlace(placeId: string) {

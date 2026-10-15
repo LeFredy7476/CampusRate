@@ -4,13 +4,15 @@ import { UpdatePlaceDto } from './dto/update-place.dto.js';
 import { Place, PlaceDocument } from './entities/place.entity.js';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Error as MongooseError } from 'mongoose';
 import type { IRatingsService } from '../ratings/ratings.service.js';
 import { RatingsService } from '../ratings/ratings.service.js';
+import { QueryPlaceDto } from './dto/query-place.dto.js';
 
 
 export interface IPlacesService {
   create: (createPlaceDto: CreatePlaceDto) => Promise<Place | null>;
-  findAll: () => Promise<Place[] | null[]>;
+  findAll: (queryDto: QueryPlaceDto) => Promise<Place[] | null[]>;
   findOne: (id: string) => Promise<Place | null>;
   update: (id: string, updatePlaceDto: UpdatePlaceDto) => Promise<void>;
   remove: (id: string) => Promise<void>;
@@ -25,16 +27,31 @@ export class PlacesService implements IPlacesService {
   ) {}
 
   async create(createPlaceDto: CreatePlaceDto) {
+    console.log(createPlaceDto.category);
     const newPlace = new this.placeModel(createPlaceDto);
-    return newPlace.save();
+    return await newPlace.save();
   }
 
-  async findAll() {
-    return this.placeModel.find().exec();
+  async findAll(queryDto: QueryPlaceDto) {
+    const { page, limit, category } = queryDto;
+    if (category) {
+      return await this.placeModel
+        .find({category: category})
+        .skip(((page ?? 1) - 1) * (limit ?? 10))
+        .limit(limit ?? 10)
+        .sort({ createdAt: 1 })
+        .exec();
+    }
+    return await this.placeModel
+      .find()
+      .skip(((page ?? 1) - 1) * (limit ?? 10))
+      .limit(limit ?? 10)
+      .sort({ createdAt: 1 })
+      .exec();
   }
 
   async findOne(id: string) {
-    return this.placeModel.findOne({ id: id }).exec();
+    return await this.placeModel.findOne({ id: id }).exec();
   }
 
   async update(id: string, updatePlaceDto: UpdatePlaceDto) {
@@ -47,7 +64,6 @@ export class PlacesService implements IPlacesService {
   }
 
   async refresh(id: string) {
-    console.log("refreshing : " + id);
     const reviews = await this.ratingsService.findByPlace(id);
     const count = reviews.length;
     let average: number | null = 0;
@@ -56,7 +72,6 @@ export class PlacesService implements IPlacesService {
     }
     if (count > 0) {average = average / count;}
     else {average = null;}
-    console.log(`{averageRating: ${average}, reviewCount: ${count}}`);
     await this.placeModel.findOneAndUpdate({id: id}, {averageRating: average, reviewCount: count}).exec();
   }
 }

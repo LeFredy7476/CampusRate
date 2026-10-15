@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PlacesService } from './places.service.js';
 import { CreatePlaceDto } from './dto/create-place.dto.js';
 import { UpdatePlaceDto } from './dto/update-place.dto.js';
+import { QueryPlaceDto } from './dto/query-place.dto.js';
 
 @Controller('places')
 export class PlacesController {
@@ -9,12 +10,13 @@ export class PlacesController {
 
   @Post()
   async create(@Body() createPlaceDto: CreatePlaceDto) {
+    console.log("creating place: " + createPlaceDto);
     return this.placesService.create(createPlaceDto);
   }
 
   @Get()
-  async findAll() {
-    return this.placesService.findAll();
+  async findAll(@Query() queryDto: QueryPlaceDto) {
+    return this.placesService.findAll(queryDto);
   }
 
   @Get(':id')
