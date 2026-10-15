@@ -1,6 +1,14 @@
 ### get places
 GET http://localhost:3000/places?limit=100&page=1 HTTP/1.1
 
+### update place
+PATCH http://localhost:3000/places/pla_ HTTP/1.1
+Content-Type: application/json
+
+{
+    "description": "Une Meilleure description"
+}
+
 ### limit overflow
 GET http://localhost:3000/places?limit=102 HTTP/1.1
 
@@ -9,88 +17,3 @@ GET http://localhost:3000/places?page=0 HTTP/1.1
 
 ### invalid category
 GET http://localhost:3000/places?category=NAN HTTP/1.1
-
-### create place
-POST http://localhost:3000/places HTTP/1.1
-Content-Type: application/json
-
-{
-    "name": "AutreGrandePlace",
-    "description": "Une Grande Place",
-    "category": "OTHER",
-    "address": "C-101"
-}
-
-### update place
-PATCH http://localhost:3000/places/rev_c0b7f734-234a-4cb8-89f9-10e88048be1c HTTP/1.1
-Content-Type: application/json
-
-{
-    "description": "Une Autre Grande Place",
-    "address": "C-102"
-}
-
-### delete place
-DELETE http://localhost:3000/places/rev HTTP/1.1
-
-### get ratings
-GET http://localhost:3000/ratings HTTP/1.1
-
-### get invalid rating
-GET http://localhost:3000/ratings/rev_1nconnue HTTP/1.1
-
-### post rating
-POST http://localhost:3000/ratings HTTP/1.1
-Content-Type: application/json
-
-{
-    "placeId": "rev_2cee20c0-33ee-4214-b13d-21edd5ed2548",
-    "authorName": "Emil",
-    "rating": 3.75,
-    "comment": "bof"
-}
-
-### update rating
-PATCH http://localhost:3000/ratings/rat_426d0142-d72a-49af-86a7-3c00e208346b HTTP/1.1
-Content-Type: application/json
-
-{
-    "rating": 3
-}
-
-### delete rating
-DELETE http://localhost:3000/ratings/rat_579f63af-691e-42b0-b169-5816544907c9 HTTP/1.1
-
-### create with wrong args
-POST http://localhost:3000/ratings HTTP/1.1
-Content-Type: application/json
-
-{
-    "placeIdddd": "rev_2cee20c0-33ee-4214-b13d-21edd5ed2548",
-    "authorNameeee": "Erroné",
-    "ratingggg": 0,
-    "commentttt": "should raise hella 400"
-}
-
-### create rating for non-existing place
-POST http://localhost:3000/ratings HTTP/1.1
-Content-Type: application/json
-
-{
-    "placeId": "rev_2cee20c0-33ee-4214-b13d-21edd5ed2542",
-    "authorName": "Mr Inconnu",
-    "rating": 0,
-    "comment": "should raise 404"
-}
-
-### invalid category & status
-POST http://localhost:3000/places HTTP/1.1
-Content-Type: application/json
-
-{
-    "name": "UnePlaceInvalide",
-    "description": "Donne une erreure",
-    "category": "UN_TRUC_QUI_EXISTE_PAS",
-    "address": "X-101",
-    "status": "INEXISTANT"
-}

@@ -1,0 +1,81 @@
+
+### create place
+POST http://localhost:3000/places HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "GrandePlace",
+    "description": "Une Grande Place",
+    "category": "OTHER",
+    "address": "C-101"
+}
+
+### create place
+POST http://localhost:3000/places HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Cafeteria",
+    "description": "Place à bouffe principale",
+    "category": "FOOD_SERVICE",
+    "address": "A-100"
+}
+
+### create place
+POST http://localhost:3000/places HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Café Exil",
+    "description": "Petit Café étudiant",
+    "category": "FOOD_SERVICE",
+    "address": "E-000"
+}
+
+### create place 
+# ! category error
+POST http://localhost:3000/places HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Toilette",
+    "description": "Endroit très important",
+    "category": "TOILETTE",
+    "address": "S-035"
+}
+
+### create place 
+# ! name lenght error
+POST http://localhost:3000/places HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "La petite salle que personne connais le nom à côté de la salle des profs dans le bloc S",
+    "description": "C'est clair, il me semble",
+    "category": "STUDY_SPACE",
+    "address": "S-024"
+}
+
+### create place 
+# ! invalid address
+POST http://localhost:3000/places HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Mon Casier",
+    "description": "Ma place personnelle pour mes choses",
+    "category": "OTHER",
+    "address": "S-0091"
+}
+
+### invalid category & status & address
+POST http://localhost:3000/places HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "UnePlaceInvalide",
+    "description": "Donne une erreure",
+    "category": "UN_TRUC_QUI_EXISTE_PAS",
+    "address": "X-10101",
+    "status": "INEXISTANT"
+}

@@ -8,7 +8,7 @@ export type PlaceDocument = HydratedDocument<Place>;
 
 @Schema({ timestamps: true })
 export class Place {
-    @Prop({ type: String, default: () => 'rev_' + randomUUID(), unique: true }) 
+    @Prop({ type: String, default: () => 'pla_' + randomUUID(), unique: true }) 
     id!: string;
     @Prop({ required: true, unique: true }) 
     name!: string;

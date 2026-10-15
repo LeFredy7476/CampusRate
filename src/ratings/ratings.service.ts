@@ -33,7 +33,7 @@ export class RatingsService implements IRatingsService {
       await this.placesService.refresh(result.id);
       return returnValue;
     } else {
-      throw new NotFoundException("specified place does not exist");
+      throw new NotFoundException("Specified place does not exist");
     }
   }
 
@@ -46,7 +46,7 @@ export class RatingsService implements IRatingsService {
     if (returnVal) {
       return returnVal;
     } else {
-      throw new NotFoundException("Place Not Found");
+      throw new NotFoundException("Rating Not Found");
     }
   }
 
